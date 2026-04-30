@@ -10,7 +10,8 @@ uses(RefreshDatabase::class);
 describe('Registration', function (): void {
     it('registers a new user successfully', function (): void {
         $response = $this->postJson('/api/v1/register', [
-            'name' => 'Test User',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
             'email' => 'test@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -21,7 +22,7 @@ describe('Registration', function (): void {
                 'success',
                 'message',
                 'data' => [
-                    'user' => ['id', 'name', 'email'],
+                    'user' => ['id', 'first_name', 'last_name', 'email'],
                     'token',
                 ],
             ])
@@ -37,7 +38,8 @@ describe('Registration', function (): void {
 
     it('fails registration with invalid data', function (): void {
         $response = $this->postJson('/api/v1/register', [
-            'name' => '',
+            'first_name' => 'John',
+            'last_name' => '',
             'email' => 'invalid-email',
             'password' => 'short',
         ]);
@@ -49,7 +51,8 @@ describe('Registration', function (): void {
         User::factory()->create(['email' => 'existing@example.com']);
 
         $response = $this->postJson('/api/v1/register', [
-            'name' => 'Test User',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
             'email' => 'existing@example.com',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -75,7 +78,7 @@ describe('Login', function (): void {
                 'success',
                 'message',
                 'data' => [
-                    'user' => ['id', 'name', 'email'],
+                    'user' => ['id', 'first_name', 'last_name', 'email'],
                     'token',
                 ],
             ])
@@ -146,7 +149,7 @@ describe('Me', function (): void {
             ->assertJsonStructure([
                 'success',
                 'message',
-                'data' => ['id', 'name', 'email'],
+                'data' => ['id', 'first_name', 'last_name', 'email'],
             ])
             ->assertJson([
                 'success' => true,
