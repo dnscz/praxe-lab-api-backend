@@ -8,6 +8,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +16,7 @@ use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @property int $id
+ * @property string $id
  * @property string $first_name
  * @property string $last_name
  * @property string $email
@@ -41,7 +42,11 @@ final class User extends Authenticatable implements MustVerifyEmail
     /** @use HasFactory<UserFactory> */
     use HasFactory;
 
+    use HasUuids;
+
     use Notifiable;
+
+    /**
 
     /**
      * Get the attributes that should be cast.
