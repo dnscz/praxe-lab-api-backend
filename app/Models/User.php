@@ -44,11 +44,10 @@ final class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
 
     use HasUuids;
-
     use Notifiable;
 
     /**
-     * @return HasMany<Product, User>
+     * @return HasMany<Product, $this>
      */
     public function createdProducts(): HasMany
     {

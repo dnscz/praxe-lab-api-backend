@@ -6,7 +6,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 final class PatchProductRequest extends FormRequest
 {
@@ -15,7 +14,13 @@ final class PatchProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user()->can('update', $this->route('product'));
+        $user = $this->user();
+
+        if ($user === null) {
+            return false;
+        }
+
+        return $user->can('update', $this->route('product'));
     }
 
     /**
@@ -26,9 +31,9 @@ final class PatchProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'unit_price' => 'sometimes|decimal:0,4|min:0|max:99999999.9999',
+            'name' => ['sometimes', 'string', 'max:255'],
+            'description' => ['sometimes', 'string'],
+            'unit_price' => ['sometimes', 'decimal:0,4', 'min:0', 'max:99999999.9999'],
         ];
     }
 }

@@ -35,6 +35,14 @@ final class Product extends Model
     use HasUuids;
 
     /**
+     * @return BelongsTo<User, $this>
+     */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -45,13 +53,4 @@ final class Product extends Model
             'unit_price' => 'decimal:8',
         ];
     }
-
-    /**
-     * @return BelongsTo<User, Product>
-     */
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
 }

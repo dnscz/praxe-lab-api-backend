@@ -10,6 +10,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -38,6 +39,8 @@ final class ProductController extends ApiController
     public function store(StoreProductRequest $request): JsonResponse
     {
         $validated = $request->validated();
+
+        /** @var User $user */
         $user = $request->user();
 
         $product = $user->createdProducts()->create($validated);
@@ -66,8 +69,8 @@ final class ProductController extends ApiController
 
         return $this->success(new ProductResource($product->fresh()));
     }
+
     /**
-     *
      * Partially the Product
      */
     public function patch(PatchProductRequest $request, Product $product): JsonResponse

@@ -51,10 +51,11 @@ final class AppServiceProvider extends ServiceProvider
     private function configureScrambleAuthenticatedRoutes(): void
     {
         Scramble::configure()
-            ->withDocumentTransformers(function (OpenApi $openApi) {
-                $openApi->secure(
-                    SecurityScheme::http('bearer')
-                );
+            ->withDocumentTransformers(function (OpenApi $openApi): void {
+                /** @var SecurityScheme $scheme */
+                $scheme = SecurityScheme::http('bearer');
+
+                $openApi->secure($scheme);
             });
     }
 }
