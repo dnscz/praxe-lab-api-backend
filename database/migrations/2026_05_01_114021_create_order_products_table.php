@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_products', function (Blueprint $table) {
+        Schema::create('order_products', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->foreignIdFor(Order::class, 'order_id')->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class, 'product_id')->constrained()->cascadeOnDelete();

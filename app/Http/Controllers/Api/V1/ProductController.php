@@ -26,8 +26,8 @@ final class ProductController extends ApiController
 
         $products = QueryBuilder::for(Product::class)
             ->allowedFilters('name', 'unit_price')
-            ->allowedSorts('name', 'unit_price')
-            ->allowedIncludes('created_by')
+            ->allowedSorts('name', 'unit_price', 'created_at', 'updated_at')
+            ->allowedIncludes('createdBy')
             ->paginate();
 
         return $this->success(ProductResource::collection($products));

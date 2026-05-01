@@ -63,9 +63,15 @@ final class Order extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    /**
+     * @return BelongsToMany<Product, $this, OrderProduct>
+     */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity', 'unit_price', 'bulk_price');
+        return $this->belongsToMany(Product::class, 'order_products')
+            ->using(OrderProduct::class)
+            ->withPivot('quantity', 'unit_price')
+            ->withTimestamps();
     }
 
     /**
@@ -81,15 +87,15 @@ final class Order extends Model
     }
 
     /**
-     * @return Attribute<float, never>
+     * @return Attribute<numeric-string, never>
      */
     protected function totalPrice(): Attribute
     {
         return Attribute::get(
-            fn () => $this->products->reduce(
-                fn (string $carry, Product $product): string => bcadd(
-                    $carry,
-                    $product->pivot->line_total,  // delegate to pivot
+            fn (): string => $this->products->reduce(
+                fn ($carry, $product): string => bcadd(
+                    (string) $carry,
+                    (string) $product->pivot->line_total,
                     scale: 4
                 ),
                 '0.0000'

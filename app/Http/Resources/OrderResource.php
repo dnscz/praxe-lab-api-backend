@@ -22,7 +22,7 @@ final class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'created_by' => $this->created_by,
+            'created_by' => new UserResource($this->whenLoaded('createdBy')),
             'status' => $this->status,
             'customer_name' => $this->customer_name,
             'customer_ico' => $this->customer_ico,

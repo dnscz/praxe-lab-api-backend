@@ -10,6 +10,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
@@ -27,12 +28,12 @@ final class OrderController extends ApiController
         $query = Order::query()->where('created_by', auth()->id());
 
         $orders = QueryBuilder::for($query)
-            ->allowedFilters('name', 'unit_price')
-            ->allowedSorts('name', 'unit_price')
+            ->allowedFilters('customer_name', 'status')
+            ->allowedSorts('customer_name', 'status', 'created_at')
             ->allowedIncludes('created_by')
             ->paginate();
 
-        return $this->success(new OrderResource($orders));
+        return $this->success(OrderResource::collection($orders));
 
     }
 
@@ -43,20 +44,26 @@ final class OrderController extends ApiController
     {
         $validated = $request->validated();
 
-        $append = [
-            'status' => OrderStatus::PENDING,
-        ];
-
-        $values = array_merge($validated, $append);
-
         /** @var User $user */
-        $user = request()->user();
+        $user = $request->user();
 
-        $order = $user->orders()->create($values);
+        $order = $user->orders()->create(
+            collect($validated)->except('products')->put('status', OrderStatus::PENDING)->all()
+        );
 
-        foreach ($validated['products'] as $product) {
-            $order->products()->attach($product['id'], [
-                'quantity' => $product['quantity'],
+        $productItems = $request->productItems();
+        $productIds = collect($productItems)->pluck('product_id')->all();
+        $products = Product::query()->whereIn('id', $productIds)->get()->keyBy('id');
+
+        foreach ($productItems as $item) {
+            $product = $products->get($item['product_id']);
+            if (! $product instanceof Product) {
+                continue;
+            }
+
+            $order->products()->attach($item['product_id'], [
+                'quantity' => $item['quantity'],
+                'unit_price' => $product->unit_price,
             ]);
         }
 
@@ -80,7 +87,32 @@ final class OrderController extends ApiController
      */
     public function update(UpdateOrderRequest $request, Order $order): JsonResponse
     {
-        //
+        $validated = $request->validated();
+
+        $order->update(collect($validated)->except('products')->all());
+
+        $productItems = $request->productItems();
+        $productIds = collect($productItems)->pluck('product_id')->all();
+        $products = Product::query()->whereIn('id', $productIds)->get()->keyBy('id');
+
+        $syncData = [];
+        foreach ($productItems as $item) {
+            $product = $products->get($item['product_id']);
+            if (! $product instanceof Product) {
+                continue;
+            }
+
+            $syncData[$item['product_id']] = [
+                'quantity' => $item['quantity'],
+                'unit_price' => $product->unit_price,
+            ];
+        }
+
+        $order->products()->sync($syncData);
+
+        $order->load('products')->refresh();
+
+        return $this->success(new OrderResource($order));
     }
 
     /**

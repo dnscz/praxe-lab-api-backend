@@ -14,13 +14,14 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $order_id
  * @property int $product_id
  * @property int $quantity
- * @property string $unit_price
- * @property string $line_total
+ * @property numeric-string $unit_price
+ * @property numeric-string $line_total
  */
 #[Fillable([
     'order_id',
     'product_id',
     'quantity',
+    'unit_price',
 ])]
 #[Appends([
     'line_total',
@@ -35,13 +36,13 @@ final class OrderProduct extends Pivot
     ];
 
     /**
-     * @return Attribute<float, never>
+     * @return Attribute<numeric-string, never>
      */
     protected function lineTotal(): Attribute
     {
         return Attribute::get(
-            fn () => bcmul(
-                (string) $this->unit_price,
+            fn (): string => bcmul(
+                $this->unit_price,
                 (string) $this->quantity,
                 scale: 4
             )

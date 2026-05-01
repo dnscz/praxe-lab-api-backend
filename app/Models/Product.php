@@ -18,9 +18,10 @@ use Illuminate\Support\Carbon;
  * @property string $created_by
  * @property string $name
  * @property string $description
- * @property float $unit_price
+ * @property string $unit_price
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read OrderProduct|null $pivot
  */
 #[Fillable([
     'created_by',
@@ -44,6 +45,17 @@ final class Product extends Model
     }
 
     /**
+     * @return BelongsToMany<Order, $this, OrderProduct>
+     */
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'order_products')
+            ->using(OrderProduct::class)
+            ->withPivot('quantity', 'unit_price')
+            ->withTimestamps();
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -53,10 +65,5 @@ final class Product extends Model
         return [
             'unit_price' => 'decimal:8',
         ];
-    }
-
-    public function orders(): BelongsToMany
-    {
-        return $this->belongsToMany(Order::class)->withPivot('quantity', 'unit_price', 'bulk_price');
     }
 }
