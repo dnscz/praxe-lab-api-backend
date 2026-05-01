@@ -6,11 +6,14 @@ namespace App\Models;
 
 use App\Enums\OrderStatus;
 use Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property string $id
@@ -26,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $address_city
  * @property string $address_country
  * @property string $address_zip
+ * @property string $total_price
  */
 #[Fillable([
     'created_by',
@@ -41,10 +45,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'address_country',
     'address_zip',
 ])]
+#[Appends([
+    'total_price',
+])]
 final class Order extends Model
 {
     /** @use HasFactory<OrderFactory> */
     use HasFactory;
+
     use HasUuids;
 
     /**
@@ -53,6 +61,11 @@ final class Order extends Model
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity', 'unit_price', 'bulk_price');
     }
 
     /**
@@ -67,4 +80,20 @@ final class Order extends Model
         ];
     }
 
+    /**
+     * @return Attribute<float, never>
+     */
+    protected function totalPrice(): Attribute
+    {
+        return Attribute::get(
+            fn () => $this->products->reduce(
+                fn (string $carry, Product $product): string => bcadd(
+                    $carry,
+                    $product->pivot->line_total,  // delegate to pivot
+                    scale: 4
+                ),
+                '0.0000'
+            )
+        );
+    }
 }
