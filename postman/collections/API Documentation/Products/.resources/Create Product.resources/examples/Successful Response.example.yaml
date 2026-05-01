@@ -1,0 +1,47 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/products"
+  method: POST
+  headers:
+    Content-Type: application/json
+    Accept: application/json
+  body:
+    type: text
+    content: |-
+      {
+        "name": "Nazev produktu",
+        "description": "popis",
+        "unit_price": 12
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Host: 127.0.0.1:8000
+    Connection: close
+    X-Powered-By: PHP/8.5.3
+    Cache-Control: no-cache, private
+    Date: Fri, 01 May 2026 14:01:28 GMT
+    Content-Type: application/json
+    X-RateLimit-Limit: "120"
+    X-RateLimit-Remaining: "119"
+    Access-Control-Allow-Origin: "*"
+    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After, X-API-Version, X-API-Version-Status, Deprecation, Sunset
+    X-API-Version: v1
+    X-API-Version-Status: active
+  body:
+    type: text
+    content: |-
+      {
+          "success": true,
+          "message": "Resource created successfully",
+          "data": {
+              "id": "019de3d8-2dcb-736f-8ad6-15ed66983841",
+              "name": "Nazev produktu",
+              "description": "popis",
+              "unit_price": "12.00000000",
+              "created_at": "2026-05-01T14:01:28+00:00",
+              "updated_at": "2026-05-01T14:01:28+00:00"
+          }
+      }
+order: 1000

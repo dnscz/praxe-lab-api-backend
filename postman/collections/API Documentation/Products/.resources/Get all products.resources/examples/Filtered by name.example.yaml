@@ -1,0 +1,46 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/products/?filter[name]=PRO1"
+  method: GET
+  headers:
+    Accept: application/json
+  queryParams:
+    - key: include
+      value: createdBy
+      disabled: true
+    - key: filter[name]
+      value: PRO1
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Host: 127.0.0.1:8000
+    Connection: close
+    X-Powered-By: PHP/8.5.3
+    Cache-Control: no-cache, private
+    Date: Fri, 01 May 2026 14:13:57 GMT
+    Content-Type: application/json
+    X-RateLimit-Limit: "120"
+    X-RateLimit-Remaining: "117"
+    Access-Control-Allow-Origin: "*"
+    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After, X-API-Version, X-API-Version-Status, Deprecation, Sunset
+    X-API-Version: v1
+    X-API-Version-Status: active
+  body:
+    type: json
+    content: |-
+      {
+          "success": true,
+          "message": "Success",
+          "data": [
+              {
+                  "id": "019ddee5-9f85-7382-bd4c-de4f2cb5d8b4",
+                  "name": "PRO1",
+                  "description": "Patched",
+                  "unit_price": "100.12300000",
+                  "created_at": "2026-04-30T14:58:03+00:00",
+                  "updated_at": "2026-05-01T09:53:35+00:00"
+              }
+          ]
+      }
+order: 3000

@@ -1,0 +1,52 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/register"
+  method: POST
+  headers:
+    Accept: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "first_name": "string",
+        "last_name": "string",
+        "email": "user89@example.com",
+        "password": "stringst",
+        "password_confirmation": "stringst"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Host: 127.0.0.1:8000
+    Connection: close
+    X-Powered-By: PHP/8.5.3
+    Cache-Control: no-cache, private
+    Date: Fri, 01 May 2026 13:21:23 GMT
+    Content-Type: application/json
+    X-RateLimit-Limit: "5"
+    X-RateLimit-Remaining: "3"
+    Access-Control-Allow-Origin: "*"
+    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After, X-API-Version, X-API-Version-Status, Deprecation, Sunset
+    X-API-Version: v1
+    X-API-Version-Status: active
+  body:
+    type: text
+    content: |-
+      {
+          "success": true,
+          "message": "User registered successfully. Please check your email to verify your account.",
+          "data": {
+              "user": {
+                  "id": "019de3b3-7597-72e4-b8d0-e11dbf2ffd95",
+                  "first_name": "string",
+                  "last_name": "string",
+                  "email": "user89@example.com",
+                  "email_verified_at": null,
+                  "created_at": "2026-05-01T13:21:22+00:00",
+                  "updated_at": "2026-05-01T13:21:22+00:00"
+              },
+              "token": "2|KAizjxkQQW8Sz4WW3xLmsrHge8h8Kd5JDhcpY6iO89d3b2ea"
+          }
+      }
+order: 1000

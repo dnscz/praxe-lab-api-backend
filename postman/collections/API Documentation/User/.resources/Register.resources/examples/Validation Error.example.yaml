@@ -1,0 +1,44 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/register"
+  method: POST
+  headers:
+    Accept: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "first_name": "string",
+        "last_name": "string",
+        "email": "user89@example.com",
+        "password": "stringst",
+        "password_confirmation": "stringst"
+      }
+response:
+  statusCode: 422
+  statusText: Unprocessable Content
+  headers:
+    Host: 127.0.0.1:8000
+    Connection: close
+    X-Powered-By: PHP/8.5.3
+    Cache-Control: no-cache, private
+    Date: Fri, 01 May 2026 13:22:50 GMT
+    Content-Type: application/json
+    X-RateLimit-Limit: "5"
+    X-RateLimit-Remaining: "4"
+    Access-Control-Allow-Origin: "*"
+    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After, X-API-Version, X-API-Version-Status, Deprecation, Sunset
+    X-API-Version: v1
+    X-API-Version-Status: active
+  body:
+    type: text
+    content: |-
+      {
+          "message": "The email has already been taken.",
+          "errors": {
+              "email": [
+                  "The email has already been taken."
+              ]
+          }
+      }
+order: 2000

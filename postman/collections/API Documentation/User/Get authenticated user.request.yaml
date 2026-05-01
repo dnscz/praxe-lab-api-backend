@@ -1,0 +1,8 @@
+$kind: http-request
+description: Gets information about the authenticated user.
+url: "{{baseUrl}}/me"
+method: GET
+headers:
+  Accept: application/json
+examples: ./.resources/Get authenticated user.resources/examples
+order: 1000

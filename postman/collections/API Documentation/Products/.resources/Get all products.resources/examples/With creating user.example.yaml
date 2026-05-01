@@ -1,0 +1,85 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/products/?include=createdBy"
+  method: GET
+  headers:
+    Accept: application/json
+  queryParams:
+    include: createdBy
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Host: 127.0.0.1:8000
+    Connection: close
+    X-Powered-By: PHP/8.5.3
+    Cache-Control: no-cache, private
+    Date: Fri, 01 May 2026 14:08:08 GMT
+    Content-Type: application/json
+    X-RateLimit-Limit: "120"
+    X-RateLimit-Remaining: "117"
+    Access-Control-Allow-Origin: "*"
+    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After, X-API-Version, X-API-Version-Status, Deprecation, Sunset
+    X-API-Version: v1
+    X-API-Version-Status: active
+  body:
+    type: text
+    content: |-
+      {
+          "success": true,
+          "message": "Success",
+          "data": [
+              {
+                  "id": "019ddee5-9f85-7382-bd4c-de4f2cb5d8b4",
+                  "name": "PRO1",
+                  "description": "Patched",
+                  "unit_price": "100.12300000",
+                  "created_by": {
+                      "id": "019ddee5-4be7-7000-8b0e-df54c4fbf2bd",
+                      "first_name": "string",
+                      "last_name": "string",
+                      "email": "user@example.com",
+                      "email_verified_at": null,
+                      "created_at": "2026-04-30T14:57:42+00:00",
+                      "updated_at": "2026-04-30T14:57:42+00:00"
+                  },
+                  "created_at": "2026-04-30T14:58:03+00:00",
+                  "updated_at": "2026-05-01T09:53:35+00:00"
+              },
+              {
+                  "id": "019de2ed-fd8d-728a-87b9-d1fc66b156a3",
+                  "name": "Muj produkt 1",
+                  "description": "Popisek",
+                  "unit_price": "300.00000000",
+                  "created_by": {
+                      "id": "019ddee5-4be7-7000-8b0e-df54c4fbf2bd",
+                      "first_name": "string",
+                      "last_name": "string",
+                      "email": "user@example.com",
+                      "email_verified_at": null,
+                      "created_at": "2026-04-30T14:57:42+00:00",
+                      "updated_at": "2026-04-30T14:57:42+00:00"
+                  },
+                  "created_at": "2026-05-01T09:45:41+00:00",
+                  "updated_at": "2026-05-01T09:46:11+00:00"
+              },
+              {
+                  "id": "019de3d8-2dcb-736f-8ad6-15ed66983841",
+                  "name": "Nazev produktu",
+                  "description": "popis",
+                  "unit_price": "12.00000000",
+                  "created_by": {
+                      "id": "019de3b3-7597-72e4-b8d0-e11dbf2ffd95",
+                      "first_name": "string",
+                      "last_name": "string",
+                      "email": "user89@example.com",
+                      "email_verified_at": null,
+                      "created_at": "2026-05-01T13:21:22+00:00",
+                      "updated_at": "2026-05-01T13:21:22+00:00"
+                  },
+                  "created_at": "2026-05-01T14:01:28+00:00",
+                  "updated_at": "2026-05-01T14:01:28+00:00"
+              }
+          ]
+      }
+order: 2000

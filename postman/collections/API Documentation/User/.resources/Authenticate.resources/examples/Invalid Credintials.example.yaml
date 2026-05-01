@@ -1,0 +1,37 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/login"
+  method: POST
+  headers:
+    Accept: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "email": "user89@example.com",
+        "password": "strigst"
+      }
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    Host: 127.0.0.1:8000
+    Connection: close
+    X-Powered-By: PHP/8.5.3
+    Cache-Control: no-cache, private
+    Date: Fri, 01 May 2026 13:25:27 GMT
+    Content-Type: application/json
+    X-RateLimit-Limit: "5"
+    X-RateLimit-Remaining: "3"
+    Access-Control-Allow-Origin: "*"
+    Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After, X-API-Version, X-API-Version-Status, Deprecation, Sunset
+    X-API-Version: v1
+    X-API-Version-Status: active
+  body:
+    type: text
+    content: |-
+      {
+          "success": false,
+          "message": "Invalid credentials"
+      }
+order: 2000

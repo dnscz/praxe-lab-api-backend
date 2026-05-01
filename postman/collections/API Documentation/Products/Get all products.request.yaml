@@ -1,0 +1,18 @@
+$kind: http-request
+description: Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections.
+url: "{{baseUrl}}/products/"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  - key: include
+    value: createdBy
+    disabled: true
+  - key: filter[name]
+    value: PRO1
+    disabled: true
+  - key: sort
+    value: updated_at
+    disabled: true
+examples: ./.resources/Get all products.resources/examples
+order: 3000
