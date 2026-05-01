@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,9 @@ Route::middleware(['auth:sanctum', 'throttle:authenticated'])->group(function ()
         Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::patch('products/{product}', [ProductController::class, 'patch'])->name('products.patch');
         Route::apiResource('products', ProductController::class)->except('update');
+
+        Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+        Route::apiResource('orders', OrderController::class)->except('update');
     });
 
     // Email verification
