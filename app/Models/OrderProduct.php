@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\OrderProductFactory;
 use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
@@ -28,6 +30,9 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 ])]
 final class OrderProduct extends Pivot
 {
+    /** @use HasFactory<OrderProductFactory> */
+    use HasFactory;
+
     use HasUuids;
 
     protected $casts = [

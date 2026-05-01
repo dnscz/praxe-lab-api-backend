@@ -95,7 +95,7 @@ final class Order extends Model
             fn (): string => $this->products->reduce(
                 fn ($carry, $product): string => bcadd(
                     (string) $carry,
-                    (string) $product->pivot->line_total,
+                    (string) ($product->pivot->line_total ?? '0.0000'),
                     scale: 4
                 ),
                 '0.0000'

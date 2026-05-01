@@ -27,7 +27,10 @@ final class StoreOrderRequest extends FormRequest
      */
     public function productItems(): array
     {
-        return $this->validated('products', []);
+        /** @var list<array{product_id: string, quantity: int}> $items */
+        $items = $this->validated('products', []);
+
+        return $items;
     }
 
     /**

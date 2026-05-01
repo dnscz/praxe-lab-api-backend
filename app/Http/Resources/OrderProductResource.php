@@ -21,13 +21,13 @@ final class OrderProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->pivot->id,
+            'id' => $this->pivot?->id,
             'product_id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'unit_price' => $this->pivot->unit_price,
-            'quantity' => $this->pivot->quantity,
-            'line_total' => $this->pivot->line_total,
+            'unit_price' => $this->pivot?->unit_price,
+            'quantity' => $this->pivot?->quantity,
+            'line_total' => $this->pivot?->line_total,
         ];
     }
 }
