@@ -36,7 +36,7 @@ use Laravel\Sanctum\HasApiTokens;
     'password',
     'remember_token',
 ])]
-final class User extends Authenticatable implements MustVerifyEmail
+final class User extends Authenticatable
 {
     use HasApiTokens;
 

@@ -79,7 +79,7 @@ variables:
   baseUrl: https://farming-simulator.pstmn.io
   access_token: ""
 auth:
-  - id: ea47a2d6-d2c5-4ee0-8751-2041aba73068
+  - id: dcab2cc1-6fcd-44eb-84bc-bcbcb282b5b9
     type: bearer
     name: bearer auth
     credentials:
